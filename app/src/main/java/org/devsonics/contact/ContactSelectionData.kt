@@ -28,7 +28,8 @@ import org.linphone.core.*
 class ContactSelectionData(private val searchResult: SearchResult) : ContactDataInterface {
     override val contact: MutableLiveData<Friend> = MutableLiveData<Friend>()
     override val displayName: MutableLiveData<String> = MutableLiveData<String>()
-    override val securityLevel: MutableLiveData<ChatRoomSecurityLevel> = MutableLiveData<ChatRoomSecurityLevel>()
+    override val securityLevel: MutableLiveData<ChatRoomSecurityLevel> =
+        MutableLiveData<ChatRoomSecurityLevel>()
     override val coroutineScope: CoroutineScope = coreContext.coroutineScope
 
     val isDisabled: MutableLiveData<Boolean> by lazy {
@@ -40,7 +41,9 @@ class ContactSelectionData(private val searchResult: SearchResult) : ContactData
     }
 
     val isLinphoneUser: Boolean by lazy {
-        searchResult.friend?.getPresenceModelForUriOrTel(searchResult.phoneNumber ?: searchResult.address?.asStringUriOnly() ?: "")?.basicStatus == PresenceBasicStatus.Open
+        searchResult.friend?.getPresenceModelForUriOrTel(
+            searchResult.phoneNumber ?: searchResult.address?.asStringUriOnly() ?: ""
+        )?.basicStatus == PresenceBasicStatus.Open
     }
 
     val sipUri: String by lazy {
