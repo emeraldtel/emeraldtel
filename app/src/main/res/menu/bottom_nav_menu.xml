@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/recent"
+        android:icon="@drawable/ic_recent"
+        android:title="@string/recent" />
+    <item
+        android:id="@+id/contact"
+        android:icon="@drawable/ic_contact"
+        android:title="@string/contact" />
+    <item
+        android:id="@+id/dial"
+        android:icon="@drawable/ic_dial"
+        android:title="@string/dial" />
+    <item
+        android:id="@+id/messages"
+        android:icon="@drawable/ic_message"
+        android:title="@string/messages" />
+</menu>

@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="refreshClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="selfPictureClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="assistantClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="settingsClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="recordingsClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="aboutClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="logoutClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="conferencesClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="quitClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="viewModel"
+            type="org.devsonics.activities.main.sidemenu.viewmodels.SideMenuViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rlSideMenuMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/_70sdp"
+        android:background="?attr/backgroundColor"
+        android:clickable="true">
+
+        <RelativeLayout
+            android:id="@+id/main_account"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_60sdp"
+            android:background="@color/notification_text"
+            android:enabled="@{viewModel.defaultAccountFound}"
+            android:visibility="@{viewModel.showAccounts ? View.VISIBLE : View.GONE}">
+
+            <ImageView
+                android:id="@+id/avatar"
+                coilRounded="@{viewModel.defaultAccountAvatar}"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:adjustViewBounds="true"
+                android:background="@drawable/generated_avatar_bg"
+                android:contentDescription="@string/content_description_change_own_picture"
+                android:onClick="@{selfPictureClickListener}"
+                android:src="@drawable/icon_single_contact_avatar"
+                android:visibility="@{viewModel.defaultAccountFound ? View.VISIBLE : View.GONE}" />
+
+            <ImageView
+                android:id="@+id/avatar_border"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@null"
+                android:src="@drawable/avatar_border"
+                android:visibility="@{viewModel.defaultAccountFound ? View.VISIBLE : View.GONE}" />
+
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/avatar_border"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/no_account_configured"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp"
+
+                    android:visibility="@{viewModel.defaultAccountFound ? View.GONE : View.VISIBLE, default=gone}" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.defaultAccountViewModel.displayName.isEmpty() ? viewModel.defaultAccountViewModel.userName : viewModel.defaultAccountViewModel.displayName}"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_13sdp"
+                    android:visibility="@{viewModel.defaultAccountFound ? View.VISIBLE : View.GONE}" />
+
+                <TextView
+                    style="@style/sip_uri_small_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_7sdp"
+                    android:text="@{viewModel.defaultAccountViewModel.displayUsernameInsteadOfIdentity ? viewModel.defaultAccountViewModel.userName : viewModel.defaultAccountViewModel.identity}"
+                    android:visibility="@{viewModel.defaultAccountFound ? View.VISIBLE : View.GONE}" />
+
+            </LinearLayout>
+
+<!--            <ImageView-->
+<!--                android:layout_width="20dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentTop="true"-->
+<!--                android:layout_alignParentRight="true"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:background="@drawable/led_background"-->
+<!--                android:contentDescription="@{viewModel.defaultAccountViewModel.iconContentDescription}"-->
+<!--                android:padding="2dp"-->
+<!--                android:src="@{viewModel.defaultAccountViewModel.iconResource, default=@drawable/led_not_registered}" />-->
+
+
+            <LinearLayout
+                android:id="@+id/llEdit"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:onClick="@{() -> viewModel.defaultAccountViewModel.accountsSettingsListener.onAccountClicked(viewModel.defaultAccountViewModel.identity)}"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bg_white_rounded"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_bold"
+                    android:clickable="false"
+                    android:gravity="center"
+                    android:text="Edit"
+                    android:textColor="@color/app_color"
+                    android:textSize="@dimen/_7sdp" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout4"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/main_account"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@color/blue">
+
+
+
+            <ImageView
+                android:id="@+id/status_led"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/_12sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:adjustViewBounds="true"
+                android:background="@drawable/led_background"
+                android:contentDescription="@{viewModel.registrationStatusText}"
+                android:onClick="@{refreshClickListener}"
+                android:padding="2dp"
+                android:src="@{viewModel.registrationStatusDrawable, default=@drawable/led_not_registered}" />
+
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/llEndBody"
+                app:layout_constraintStart_toEndOf="@+id/status_led"
+                app:layout_constraintTop_toTopOf="parent">
+                <TextView
+                    android:id="@+id/textView24"
+                    app:layout_constraintBottom_toTopOf="@+id/textView25"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread_inside"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:onClick="@{refreshClickListener}"
+                    android:paddingLeft="5dp"
+                    android:text="@{viewModel.registrationStatusText, default=@string/status_not_connected}"
+                    android:textColor="?attr/accentTextColor"
+                    android:textSize="15sp" />
+
+
+                <TextView
+
+                    android:id="@+id/textView25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="sip:xyzcompany-101@sip3.emeraldtel.co.uk"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_7sdp"
+
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/llEndBody"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/swOnOff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:checked="@{viewModel.switchState}"
+                    android:onCheckedChanged="@{(buttonView, isChecked) -> viewModel.onSwitchCheckedChanged(isChecked)}"
+                    android:visibility="visible"
+                    android:gravity="center"
+                    android:padding="@dimen/_5sdp"
+                    android:textSize="@dimen/_20ssp"
+                    android:thumb="@drawable/custom_thumb"
+                    app:track="@drawable/custom_track_side_menu" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:padding="@dimen/_15sdp"
+                    android:background="@drawable/ic_operating_arrow"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_above="@id/side_menu_quit"
+            android:layout_below="@id/constraintLayout4">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="@{viewModel.showAccounts ? View.VISIBLE : View.GONE}"
+                    app:entries="@{viewModel.accounts}"
+                    app:layout="@{@layout/side_menu_account_cell}" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:onClick="@{assistantClickListener}"
+                    android:visibility="@{viewModel.showAssistant ? View.VISIBLE : View.GONE}">
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:contentDescription="@string/assistant"
+                        android:padding="10dp"
+                        android:src="@drawable/menu_assistant" />
+
+                    <TextView
+                        style="@style/standard_text_font"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="16dp"
+                        android:text="@string/add_account" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:onClick="@{settingsClickListener}"
+                    android:visibility="@{viewModel.showSettings ? View.VISIBLE : View.GONE}">
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:contentDescription="@string/settings"
+                        android:padding="10dp"
+                        android:src="@drawable/menu_options" />
+
+                    <TextView
+                        style="@style/standard_text_font"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="16dp"
+                        android:text="@string/settings" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:onClick="@{recordingsClickListener}"
+                    android:visibility="@{viewModel.showRecordings ? View.VISIBLE : View.GONE}">
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:contentDescription="@string/recordings"
+                        android:padding="10dp"
+                        android:src="@drawable/menu_recordings" />
+
+                    <TextView
+                        style="@style/standard_text_font"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="16dp"
+                        android:text="@string/recordings" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:onClick="@{conferencesClickListener}"
+                    android:visibility="@{viewModel.showScheduledConferences ? View.VISIBLE : View.GONE}">
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:contentDescription="@string/conference_scheduled"
+                        android:padding="7dp"
+                        android:src="@drawable/icon_meeting_schedule" />
+
+                    <TextView
+                        style="@style/standard_text_font"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="16dp"
+                        android:text="@string/conference_scheduled" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:onClick="@{aboutClickListener}"
+                    android:visibility="@{viewModel.showAbout ? View.VISIBLE : View.GONE}">
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:contentDescription="@string/about"
+                        android:padding="10dp"
+                        android:src="@drawable/menu_about" />
+
+                    <TextView
+                        style="@style/standard_text_font"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="16dp"
+                        android:text="@string/about" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:onClick="@{logoutClickListener}">
+
+                    <ImageView
+                        android:layout_width="45dp"
+                        android:layout_height="45dp"
+                        android:contentDescription="@string/about"
+                        android:padding="10dp"
+                        android:src="@drawable/menu_logout" />
+
+                    <TextView
+                        style="@style/standard_text_font"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="16dp"
+                        android:text="@string/logout" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/side_menu_quit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="?attr/accentColor"
+            android:gravity="center_vertical"
+            android:onClick="@{quitClickListener}"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/quit"
+                android:padding="5dp"
+                android:src="@drawable/quit_default" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/quit"
+                android:textColor="?attr/accentTextColor"
+                android:textSize="21sp" />
+
+        </LinearLayout>
+        <!--        android:visibility="@{viewModel.showQuit ? View.VISIBLE : View.GONE}"-->
+    </RelativeLayout>
+
+</layout>

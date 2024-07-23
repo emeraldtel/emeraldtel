@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="historyClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="contactsClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="dialerClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="chatClickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="viewModel"
+            type="org.devsonics.activities.main.viewmodels.TabsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motion_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:layoutDescription="@xml/motion_main_activity_tabs_selector">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineLeft"
+            layout_constraintGuide_percent="@{viewModel.leftAnchor, default=0.25}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineMiddle"
+            layout_constraintGuide_percent="@{viewModel.middleAnchor, default=0.5}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineRight"
+            layout_constraintGuide_percent="@{viewModel.rightAnchor, default=0.75}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <ImageView
+            android:id="@+id/history"
+            android:layout_width="0dp"
+            app:tint="@color/icon_tint"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_centerInParent="true"
+            android:background="@color/blue"
+            android:contentDescription="@string/content_description_menu_history"
+            android:onClick="@{historyClickListener}"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_recent"
+            app:layout_constraintEnd_toEndOf="@id/guidelineLeft"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvHistory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{historyClickListener}"
+            android:background="@color/blue"
+            android:paddingBottom="@dimen/_15sdp"
+            android:text="@string/recent"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="@id/guidelineLeft"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/history" />
+
+        <TextView
+            android:id="@+id/history_unread_count"
+            style="@style/unread_count_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginRight="@dimen/_23sdp"
+            android:background="@{viewModel.missedCallsCount == 0 ? @drawable/hidden_unread_message_count_bg : @drawable/unread_message_count_bg}"
+            android:gravity="center"
+            android:text="@{viewModel.missedCallsCount == 0 ? `` : String.valueOf(viewModel.missedCallsCount)}"
+            android:translationY="@{viewModel.historyMissedCountTranslateY}"
+            app:layout_constraintRight_toLeftOf="@id/guidelineLeft"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/contacts"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@color/blue"
+            android:onClick="@{contactsClickListener}"
+            app:layout_constraintEnd_toEndOf="@id/guidelineMiddle"
+            app:layout_constraintStart_toStartOf="@id/guidelineLeft">
+
+            <ImageView
+                android:id="@+id/ivContacts"
+                android:layout_width="match_parent"
+                app:tint="@color/icon_tint"
+                android:layout_height="@dimen/_40sdp"
+                android:contentDescription="@string/content_description_menu_contacts"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/ic_contact" />
+
+            <TextView
+                android:id="@+id/tvContacts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivContacts"
+                android:gravity="center"
+                android:background="@color/blue"
+                android:paddingBottom="@dimen/_15sdp"
+                android:text="@string/dial"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/dialer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/blue"
+            android:onClick="@{dialerClickListener}"
+            app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+            app:layout_constraintStart_toStartOf="@id/guidelineMiddle">
+
+            <ImageView
+                android:id="@+id/ivDial"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:contentDescription="@string/content_description_menu_dialer"
+                android:padding="@dimen/_10sdp"
+                app:tint="@color/icon_tint"
+                android:src="@drawable/ic_dial" />
+
+            <TextView
+                android:id="@+id/tvDial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+android:background="@color/blue"
+                android:layout_below="@+id/ivDial"
+                android:gravity="center"
+                android:paddingBottom="@dimen/_15sdp"
+                android:text="@string/dial"
+                android:textColor="@color/white" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/chat"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_centerInParent="true"
+            android:background="@color/blue"
+            android:contentDescription="@string/content_description_menu_chat"
+            android:onClick="@{chatClickListener}"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_message"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guidelineRight"
+            app:tint="@color/icon_tint" />
+
+        <TextView
+            android:id="@+id/chat_unread_count"
+            style="@style/unread_count_font"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+            android:background="@{viewModel.unreadMessagesCount == 0 ? @drawable/hidden_unread_message_count_bg : @drawable/unread_message_count_bg}"
+            android:gravity="center"
+            android:text="@{viewModel.unreadMessagesCount == 0 ? `` : String.valueOf(viewModel.unreadMessagesCount)}"
+            android:translationY="@{viewModel.chatUnreadCountTranslateY}"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:onClick="@{chatClickListener}"
+            android:background="@color/blue"
+            android:paddingBottom="@dimen/_15sdp"
+            android:text="@string/messages"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guidelineRight"
+            app:layout_constraintTop_toBottomOf="@+id/chat" />
+
+        <View
+            android:id="@+id/selector"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/tabs_fragment_selector_size"
+            android:background="@color/app_color" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+</layout>
