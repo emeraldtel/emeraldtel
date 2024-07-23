@@ -98,7 +98,8 @@ class ContactLoader : LoaderManager.LoaderCallbacks<Cursor> {
 
         val core = coreContext.core
         val linphoneMime = loader.context.getString(R.string.linphone_address_mime_type)
-        val preferNormalizedPhoneNumber = corePreferences.preferNormalizedPhoneNumbersFromAddressBook
+        val preferNormalizedPhoneNumber =
+            corePreferences.preferNormalizedPhoneNumbersFromAddressBook
 
         if (core.globalState == GlobalState.Shutdown || core.globalState == GlobalState.Off) {
             Log.w("[Contacts Loader] Core is being stopped or already destroyed, abort")
@@ -158,13 +159,29 @@ class ContactLoader : LoaderManager.LoaderCallbacks<Cursor> {
                             when (mime) {
                                 ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE -> {
                                     val data1: String? =
-                                        cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                                        cursor.getString(
+                                            cursor.getColumnIndexOrThrow(
+                                                ContactsContract.CommonDataKinds.Phone.NUMBER
+                                            )
+                                        )
                                     val data2: String? =
-                                        cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.TYPE))
+                                        cursor.getString(
+                                            cursor.getColumnIndexOrThrow(
+                                                ContactsContract.CommonDataKinds.Phone.TYPE
+                                            )
+                                        )
                                     val data3: String? =
-                                        cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.LABEL))
+                                        cursor.getString(
+                                            cursor.getColumnIndexOrThrow(
+                                                ContactsContract.CommonDataKinds.Phone.LABEL
+                                            )
+                                        )
                                     val data4: String? =
-                                        cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER))
+                                        cursor.getString(
+                                            cursor.getColumnIndexOrThrow(
+                                                ContactsContract.CommonDataKinds.Phone.NORMALIZED_NUMBER
+                                            )
+                                        )
 
                                     val label =
                                         PhoneNumberUtils.addressBookLabelTypeToVcardParamString(
@@ -199,9 +216,14 @@ class ContactLoader : LoaderManager.LoaderCallbacks<Cursor> {
                                         }
                                     }
                                 }
+
                                 linphoneMime, ContactsContract.CommonDataKinds.SipAddress.CONTENT_ITEM_TYPE -> {
                                     val sipAddress: String? =
-                                        cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS))
+                                        cursor.getString(
+                                            cursor.getColumnIndexOrThrow(
+                                                ContactsContract.CommonDataKinds.SipAddress.SIP_ADDRESS
+                                            )
+                                        )
                                     if (sipAddress != null) {
                                         val address = core.interpretUrl(sipAddress, true)
                                         if (address != null &&
@@ -214,9 +236,14 @@ class ContactLoader : LoaderManager.LoaderCallbacks<Cursor> {
                                         }
                                     }
                                 }
+
                                 ContactsContract.CommonDataKinds.Organization.CONTENT_ITEM_TYPE -> {
                                     val organization: String? =
-                                        cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Organization.COMPANY))
+                                        cursor.getString(
+                                            cursor.getColumnIndexOrThrow(
+                                                ContactsContract.CommonDataKinds.Organization.COMPANY
+                                            )
+                                        )
                                     if (organization != null) {
                                         friend.organization = organization
                                     }
